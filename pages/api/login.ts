@@ -22,7 +22,11 @@ const UserLogin: NextApiHandler = async (
   try {
     const token = jwt.sign(
       {
-        user: { id: user.id, username: user.username },
+        user: {
+          id: user.id,
+          FirstName: user.firstname,
+          LastName: user.lastname,
+        },
       },
       "jfshffgjfgjfghefgfwj",
       { expiresIn: process.env.TOKEN_EXPIRE }

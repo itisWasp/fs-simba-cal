@@ -6,7 +6,7 @@ const UserRegistration: NextApiHandler = async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
-  const { UserName, Email, Password } = req.body;
+  const { FirstName, LastName, Email, Password } = req.body;
 
   //check if the email is already registered
   const emailExists = await prisma.user.findUnique({
@@ -23,7 +23,8 @@ const UserRegistration: NextApiHandler = async (
   try {
     const user = await prisma.user.create({
       data: {
-        username: UserName,
+        firstname: FirstName,
+        lastname: LastName,
         email: Email,
         password: hashedPassword,
       },

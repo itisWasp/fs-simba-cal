@@ -18,11 +18,14 @@ function Login({}: Props) {
         Email: email,
         Password: password,
       };
-      await fetch("/api/login", {
+      const response = await fetch("/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
+
+      console.log(JSON.stringify(response));
+      //console.log(JSON.stringify(response));
 
       setPassword("");
       setEmail("");

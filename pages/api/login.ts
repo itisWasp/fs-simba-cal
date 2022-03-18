@@ -8,6 +8,7 @@ const UserLogin: NextApiHandler = async (
   res: NextApiResponse
 ) => {
   const { Email, Password } = req.body;
+  const config: any = process.env.JWT_TOKEN_SECRET;
   // check if the email and passowrd exists in the database...
   const user = await prisma.user.findUnique({
     where: { email: Email },
@@ -28,8 +29,7 @@ const UserLogin: NextApiHandler = async (
           LastName: user.lastname,
         },
       },
-      "jfshffgjfgjfghefgfwj",
-      { expiresIn: process.env.TOKEN_EXPIRE }
+      config
     );
 
     res.setHeader("auth-token", token);

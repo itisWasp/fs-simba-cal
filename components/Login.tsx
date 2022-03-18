@@ -42,7 +42,9 @@ function Login({}: Props) {
 
       const response = await axios.post(`/api/login`, body);
 
-      console.log(response?.data);
+      const accessToken = response.headers["auth-token"];
+
+      localStorage.setItem("token", accessToken);
 
       setEmail("");
       setPassword("");

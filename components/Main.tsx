@@ -1,19 +1,40 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import axios from "axios";
+import requireAuthentication from "../HOC/requireAuthentication/index";
 
 type Props = {};
 
 const Booking = (props: Props) => {
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
+
+  useEffect(() => {
+    const config: any = {
+      headers: {
+        "auth-token": localStorage.getItem("token"),
+      },
+    };
+    const getProfile = async () => {
+      const response = await axios.get(`/api/profile`, config);
+
+      console.log(response.data);
+      setFirstname(response.data.FirstName);
+      setLastname(response.data.LastName);
+    };
+
+    getProfile();
+  }, []);
+
   return (
     <section>
       <div className="float-left">
         <aside className="w-64" aria-label="Sidebar">
-          <div className="h-full h-screen min-h-screen px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-blue-900">
+          <div className="h-full h-screen min-h-screen pt-20 overflow-y-auto px-50 bg-gray-50 dark:bg-blue-900">
             <ul className="space-y-2">
               <li>
                 <a
                   href="#"
-                  target="_blank"
                   className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
                 >
                   <svg
@@ -52,16 +73,41 @@ const Booking = (props: Props) => {
                   </span>
                 </a>
               </li>
+
+              <li>
+                <div className="flex flex-wrap pt-60 place-items-end">
+                  <div className="relative p-4 overflow-hidden bg-white shadow-lg rounded-xl w-72 md:w-96">
+                    <a href="#" className="block w-full h-full">
+                      <div className="flex items-center py-2 mb-2 border-b-2">
+                        {/* <img className='object-cover w-10 h-10 rounded-full' alt='User avatar' src='https://images.unsplash.com/photo-1477118476589-bff2c5c4cfbb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=200&q=200'> */}
+
+                        <div className="pl-3">
+                          <div className="font-medium">
+                            {firstname.toLowerCase()}-{lastname.toLowerCase()}
+                          </div>
+                          {/* <div className="text-sm text-gray-600">
+                        Sr. Forntend Developer
+                      </div> */}
+                        </div>
+                      </div>
+                      <div className="w-full h-2 bg-blue-200 rounded-full">
+                        <div className="w-2/3 h-full text-xs text-center text-white bg-blue-600 rounded-full"></div>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </li>
             </ul>
           </div>
         </aside>
       </div>
-      <Link href={"/mugisha-israel/secret"}>
-        <div className="h-screen p-20 bg-slate-100">
-          <h3 className="mb-4 text-sm font-bold text-dark-300">Event Types</h3>
-          <p className="pb-8">
-            Create events to share for people to book on your calendar.
-          </p>
+
+      <div className="h-screen p-20 bg-slate-100">
+        <h3 className="mb-4 text-sm font-bold text-dark-300">Event Types</h3>
+        <p className="pb-8">
+          Create events to share for people to book on your calendar.
+        </p>
+        <Link href={"/mugisha-israel/secret"}>
           <div className="p-6 bg-white rounded-lg shadow-lg cursor-pointer">
             <h2 className="mb-2 text-2xl font-bold text-gray-800">
               Secret Meeting
@@ -70,10 +116,10 @@ const Booking = (props: Props) => {
               Use This Session to book a one on one with Me.
             </p>
           </div>
-        </div>
-      </Link>
+        </Link>
+      </div>
     </section>
   );
 };
 
-export default Booking;
+export default requireAuthentication(Booking);

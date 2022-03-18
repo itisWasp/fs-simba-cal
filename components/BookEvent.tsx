@@ -90,6 +90,7 @@ const BookEvent = (props: Props) => {
                     type="text"
                     placeholder="Your Name"
                     onChange={(e) => setName(e.target.value)}
+                    required
                     className="
                         w-full
                         rounded
@@ -107,6 +108,7 @@ const BookEvent = (props: Props) => {
                   <input
                     type="email"
                     placeholder="Your Email"
+                    required
                     onChange={(e) => setEmail(e.target.value)}
                     className="
                         w-full

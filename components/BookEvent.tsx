@@ -33,6 +33,8 @@ const BookEvent = (props: Props) => {
       setName("");
       setEmail("");
 
+      router.replace("/success");
+
       if (
         attendeeResponse.data.message == "Attendee Register Successfully" &&
         dateResponse.data.message == "Booked Reservation successfully"

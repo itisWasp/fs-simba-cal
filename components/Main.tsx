@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from "react";
-import Link from "next/link";
 import axios from "axios";
 import requireAuthentication from "../HOC/requireAuthentication/index";
+import Attendees from "./Attendees";
+import EventTypes from "./EventTypes";
+import { useRouter } from "next/router";
 
 type Props = {};
 
 const Booking = (props: Props) => {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
+  const [active, setActive] = useState("Events");
+
+  const router = useRouter();
 
   useEffect(() => {
     const config: any = {
@@ -26,6 +31,11 @@ const Booking = (props: Props) => {
     getProfile();
   }, []);
 
+  const handleLogout = () => {
+    localStorage.clear();
+    router.replace("/login");
+  };
+
   return (
     <section>
       <div className="float-left">
@@ -33,8 +43,9 @@ const Booking = (props: Props) => {
           <div className="h-full h-screen min-h-screen pt-20 overflow-y-auto px-50 bg-gray-50 dark:bg-blue-900">
             <ul className="space-y-2">
               <li>
-                <a
-                  href="#"
+                <nav
+                  // href="#"
+                  onClick={() => setActive("Events")}
                   className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
                 >
                   <svg
@@ -48,12 +59,13 @@ const Booking = (props: Props) => {
                   <span className="flex-1 ml-3 whitespace-nowrap">
                     Event Types
                   </span>
-                </a>
+                </nav>
               </li>
 
               <li>
-                <a
-                  href="#"
+                <nav
+                  // href="#"
+                  onClick={() => setActive("Bookings")}
                   className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
                 >
                   <svg
@@ -71,7 +83,7 @@ const Booking = (props: Props) => {
                   <span className="flex-1 ml-3 whitespace-nowrap">
                     Bookings
                   </span>
-                </a>
+                </nav>
               </li>
 
               <li>
@@ -97,27 +109,18 @@ const Booking = (props: Props) => {
                   </div>
                 </div>
               </li>
+              <button
+                className="px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700"
+                onClick={handleLogout}
+              >
+                Logout
+              </button>
             </ul>
           </div>
         </aside>
       </div>
-
-      <div className="h-screen p-20 bg-slate-100">
-        <h3 className="mb-4 text-sm font-bold text-dark-300">Event Types</h3>
-        <p className="pb-8">
-          Create events to share for people to book on your calendar.
-        </p>
-        <Link href={"/mugisha-israel/secret"}>
-          <div className="p-6 bg-white rounded-lg shadow-lg cursor-pointer">
-            <h2 className="mb-2 text-2xl font-bold text-gray-800">
-              Secret Meeting
-            </h2>
-            <p className="text-gray-700">
-              Use This Session to book a one on one with Me.
-            </p>
-          </div>
-        </Link>
-      </div>
+      {active == "Events" && <EventTypes />}
+      {active == "Bookings" && <Attendees />}
     </section>
   );
 };

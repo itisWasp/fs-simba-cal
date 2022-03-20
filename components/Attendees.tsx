@@ -36,16 +36,18 @@ const Attendees = (props: Props) => {
       </p>
       {id.map((n: any) => {
         return (
-          <div
-            className="p-6 bg-white rounded-lg shadow-lg cursor-pointer"
-            id={n.id}
-          >
-            <h2 className="mb-2 text-2xl font-bold text-gray-800">
-              Secret Meeting
-            </h2>
-            <p className="text-gray-700">{name}</p>
-            <p className="text-gray-700">{email}</p>
-          </div>
+          <>
+            <div
+              className="flex flex-col p-6 space-y-4 bg-white rounded-lg shadow-lg cursor-pointer"
+              id={n.id}
+            >
+              <h2 className="mb-2 text-2xl font-bold text-gray-800">
+                Secret Meeting
+              </h2>
+              <p className="text-gray-700">{n.name}</p>
+              <p className="text-gray-700">{n.email}</p>
+            </div>
+          </>
         );
       })}
     </div>

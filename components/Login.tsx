@@ -132,8 +132,9 @@ function Login({}: Props) {
             </div>
             <div className="ext-left md:text-center">
               <p>
-                Don't Have an Account Click,{" "}
-                <Link href="/register">
+                Do not Have an Account Click,
+                <br />
+                <Link href="/register" passHref>
                   <p className="no-underline hover:underline">Here</p>
                 </Link>
               </p>

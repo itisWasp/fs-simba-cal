@@ -177,8 +177,9 @@ const Register = (props: Props) => {
             </div>
             <div className="ext-left md:text-center">
               <p>
-                Have an Account Click,{" "}
-                <Link href="/login">
+                Have an Account Click,
+                <br />
+                <Link href="/login" passHref>
                   <p className="no-underline hover:underline">Here</p>
                 </Link>
               </p>

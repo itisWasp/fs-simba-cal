@@ -5,7 +5,7 @@ const attendeeInfo: NextApiHandler = async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
-  const { Name, Email, Date } = req.body;
+  const { Name, Email, Date }: any = req.body;
 
   if (req.method == "POST") {
     try {

@@ -8,14 +8,14 @@ import Sidebar from "../components/shared/Sidebar";
 
 type Props = {};
 
-const events = (props: Props) => {
+const Events = (props: Props) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
     const getAllEvents = async () => {
-      const { data } = await axios.get("/api/attendee");
-      setData(data);
-      console.log(data);
+      const response = await axios.get("/api/attendee");
+      setData(response.data);
+      console.log(response.data);
     };
     getAllEvents();
   }, []);
@@ -96,4 +96,4 @@ const events = (props: Props) => {
   );
 };
 
-export default events;
+export default Events;

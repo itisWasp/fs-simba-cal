@@ -16,6 +16,8 @@ const BookEvent = (props: Props) => {
   const [Name, setName] = useState("");
   const [Email, setEmail] = useState("");
 
+  const { eventTypeId } = router.query;
+
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
 
@@ -23,12 +25,13 @@ const BookEvent = (props: Props) => {
       const attendeeResponse = await axios.post(`/api/attendee`, {
         Email: Email,
         Name: Name,
+        Date: date,
       });
 
-      const dateResponse = await axios.post(`/api/booking`, {
-        StartDate: date,
-        EndDate: date2,
-      });
+      // const dateResponse = await axios.post(`/api/booking`, {
+      //   StartDate: date,
+      //   EndDate: date2,
+      // });
 
       setName("");
       setEmail("");
@@ -36,8 +39,9 @@ const BookEvent = (props: Props) => {
       router.replace("/success");
 
       if (
-        attendeeResponse.data.message == "Attendee Register Successfully" &&
-        dateResponse.data.message == "Booked Reservation successfully"
+        attendeeResponse.data.message == "Attendee Register Successfully"
+        // &&
+        // dateResponse.data.message == "Booked Reservation successfully"
       )
         alert("Attendee Register Successfully");
     } catch (error: any) {
@@ -133,18 +137,6 @@ const BookEvent = (props: Props) => {
                       value={date}
                       onChange={(newValue) => {
                         setDate(newValue);
-                      }}
-                    />
-                  </LocalizationProvider>
-                </div>
-                <div className="mb-6">
-                  <LocalizationProvider dateAdapter={AdapterDateFns}>
-                    <DateTimePicker
-                      renderInput={(props) => <TextField {...props} />}
-                      label="Choose the End Date and Time"
-                      value={date2}
-                      onChange={(newValue) => {
-                        setDate2(newValue);
                       }}
                     />
                   </LocalizationProvider>
